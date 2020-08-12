@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>code.html</h1>
+    <p>call back from auth provider</p>
+</div>
+<div class="container">
+    <p>
+        this has been done already for you by the app. Logged on to use website so browser has that JSESSIONID.
+        That's used to get the code and so the access_token
+    </p>
+    <code>
+        curl -v --cookie "JSESSIONID=insert" "http://127.0.0.1:8081/auth/oauth/authorize?response_type=code&client_id=R2dpxQ3vPrtfgF72&redirect_uri=http://127.0.0.1:8080/code/&attribute=redirectWithRedirectView"
+    </code>
+<p>
+
+    if you want to do this with curl you'll need JESSIONID to the auth provider, available in browser. Remember browser logged in not app!!
+    Your code is <p th:text="${code}"></p>
+    </p>
+
+
+    <p>
+        then use code to get access token<br>
+    </p>
+    <code>
+
+        <span th:text="'curl -X POST -u \''+${clientId}+':'+${clientSecret}+'\''"></span>
+        -H "Content-Type: application/x-www-form-urlencoded"
+        -d "<span th:text="'grant_type=authorization_code&code='+${code}"></span><span
+            th:text="'&redirect_uri='+${getCode}"></span><span
+            th:text="'&client_id='+${clientId}+'&client_secret='+${clientSecret}"></span><span>"</span>
+        <span th:text="${tokenUri}"></span>
+
+    </code>
+    <p>
+        which returns
+    </p>
+    <br>
+    <code>
+        {"access_token":"&lt;access_token&gt;","token_type":"bearer","refresh_token":"&lt;refresh token&gt;","expires_in":42253,"scope":"user_info"}
+    </code>
+    <br>
+    <p>
+        finally use access token to use api<br>
+    </p>
+    <code>
+        curl -H "Authorization: Bearer ${access_token}" http://127.0.0.1:8080/api/jobs
+    </code>
+
+</div>
+</body>
+</html>

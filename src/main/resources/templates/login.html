@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>login.html</h1>
+
+</div>
+
+<div class="container">
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form th:action="@{/login}" method="post">
+
+        <div class="container">
+            <div class="container">
+            <label style="width:100px;" for="username"><b>Username</b></label>
+            <input style="width:50%;margin-bottom:20px;" type="text" placeholder="Enter Username" name="username" required>
+            </div>
+            <div class="container">
+
+            <label style="width:100px;" for="password"><b>Password</b></label>
+            <input style="width:50%;margin-bottom:20px;" type="password" placeholder="Enter Password" name="password" required>
+            </div>
+        </div>
+
+        <div class="container">
+            <button  class="btn btn-primary" type="submit">Login</button>
+        </div>
+
+
+    </form>
+</div>
+</body>
+</html>

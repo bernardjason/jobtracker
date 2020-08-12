@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Example</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="/do_logout">Logout</a></li>
+                <li><a data-toggle="modal" data-target="#myModal">New Job</a></li>
+                <li><a th:href="@{/getcode}">getcode</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="jumbotron text-center">
+        <h1>Index.html</h1>
+        <p>Username</p><pre th:text="${username}">not set.</pre>
+    </div>
+
+
+    <div id="jobs" th:insert="jobs">
+        These are jobs
+    </div>
+
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="newform" action="#" th:action="@{/}" th:object="${job}" method="post">
+                        <p>title: <input type="text" th:field="*{title}"/></p>
+                        <p>description: <input type="text" th:field="*{description}"/></p>
+
+                        <button id="submit_js" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+
+                        <input class="btn btn-secondary" type="reset" value="Reset">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#submit_js').click(function() {
+      $.ajax({
+            type: "POST",
+            url: "/",
+            data: $('#newform').serialize(),
+                success: function(msg){
+                  var url = '/jobs';
+                  $("#jobs").load(url);
+                  $('#newform').trigger("reset");
+            },
+            error: function(){
+                alert("failure");
+            }
+          });
+    });
+
+
+</script>
+
+</body>
+
+</html>
