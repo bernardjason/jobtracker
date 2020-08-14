@@ -1,12 +1,12 @@
 example project for next time I need it. Simple spring app with basic authentication either
-with db or oauth.
+with db or oauth. Login with user jason and password of password. Single table create a job, works single page after logon.
 
 setup with
 ```
 spring init --dependencies web,data-jpa,thymeleaf,h2 jobtracker
 ```
 
-# SQLITE
+### SQLITE
 needs to be run with sqlite profile
 
 ```
@@ -15,10 +15,17 @@ java -Dspring.profiles.active=sqlite -jar target/jobtracker-0.0.1-SNAPSHOT.jar
 
 or
 ```
-mvn spring-boot:run -Dspring-boot.run.profiles=sqlite
+./mvnw spring-boot:run -Dspring-boot.run.profiles=sqlite
 ```
 
-# authenticate against DB rather than dummy oath server
+### test authentication server
+to run the oauth server
+```
+cd springbootoauth
+./mvnw spring-boot:run -Dspring-boot.run.profiles=sqlite
+```
+
+### authenticate against DB rather than dummy oath server
 application.properties has value
 oauth.enabled=true
 
@@ -27,7 +34,7 @@ if you want to authenticate against DB then set to false
 if you want to authentcate against sqlite db then you'll need to apply schema.sql 
 manually for authentication
 
-#### intellij
+### intellij
 to get devtools working from Intellij
 https://mkyong.com/spring-boot/intellij-idea-spring-boot-template-reload-is-not-working/
 
